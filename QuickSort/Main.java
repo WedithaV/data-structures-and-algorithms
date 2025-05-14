@@ -26,17 +26,17 @@ class QuickSort {
     }
 
     public int partition(int arr[], int low, int high) {
-        int pivot = low;
+        int pivot = arr[low];
         int left = low + 1;
         int right = high;
 
         while (left <= right) {
 
-            while (arr[left] <= pivot) {
+            while (left <= right && arr[left] <= pivot) { // left <= right use to avoid ArrayIndexOutOfBoundsException.
                 left++;
             }
 
-            while (arr[right] > pivot) {
+            while (left <= right && arr[right] > pivot) {
                 right--;
             }
 
