@@ -4,12 +4,11 @@ public class Main {
     public static void main(String[] args) {
         BinarySearchTree tree = new BinarySearchTree();
         tree.insert(5);
-        System.out.println(tree.search(6));
-        tree.insert(10);
-        System.out.println(tree.search(5));
-        System.out.println(tree.search(10));
-        tree.delete(10);
-        System.out.println(tree.search(10));
+        tree.insert(8);
+        tree.insert(7);
+        System.out.println(tree.search(8));
+        tree.delete(8);
+        System.out.println(tree.search(8));
     }
 }
 
@@ -71,7 +70,7 @@ class BinarySearchTree {
     }
 
     public void delete(int value) {
-        deleteLeafNode(root, value);
+        deleteNodeWithOneChild(root, value);
     }
 
     private Node deleteLeafNode(Node tempnode, int value) {
@@ -81,6 +80,21 @@ class BinarySearchTree {
             tempnode.right = deleteLeafNode(tempnode.right, value);
         } else if (value == tempnode.key) {
             tempnode = null;
+        }
+        return tempnode;
+    }
+
+    private Node deleteNodeWithOneChild(Node tempnode, int value) {
+        if (value < tempnode.key) {
+            tempnode.left = deleteNodeWithOneChild(tempnode.left, value);
+        } else if (value > tempnode.key) {
+            tempnode.right = deleteNodeWithOneChild(tempnode.right, value);
+        } else if (value == tempnode.key) {
+            if (tempnode.left == null) {
+                return tempnode.right;
+            } else if (tempnode.right == null) {
+                return tempnode.left;
+            }
         }
         return tempnode;
     }
