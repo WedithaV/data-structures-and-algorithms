@@ -7,6 +7,9 @@ public class Main {
         System.out.println(tree.search(6));
         tree.insert(10);
         System.out.println(tree.search(5));
+        System.out.println(tree.search(10));
+        tree.delete(10);
+        System.out.println(tree.search(10));
     }
 }
 
@@ -65,5 +68,20 @@ class BinarySearchTree {
             return searchRec(tempNode.right, value);
         }
         return null;
+    }
+
+    public void delete(int value) {
+        deleteLeafNode(root, value);
+    }
+
+    private Node deleteLeafNode(Node tempnode, int value) {
+        if (value < tempnode.key) {
+            tempnode.left = deleteLeafNode(tempnode.left, value);
+        } else if (value > tempnode.key) {
+            tempnode.right = deleteLeafNode(tempnode.right, value);
+        } else if (value == tempnode.key) {
+            tempnode = null;
+        }
+        return tempnode;
     }
 }
