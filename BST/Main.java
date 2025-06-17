@@ -66,14 +66,17 @@ class BinarySearchTree {
         } else if (value > tempNode.key) {
             return searchRec(tempNode.right, value);
         }
-        return null;
+        return null; // To avoid compiler warnings
     }
 
     public void delete(int value) {
-        deleteNodeWithOneChild(root, value);
+        deleteNodeWithTwoChilds(root, value);
     }
 
     private Node deleteLeafNode(Node tempnode, int value) {
+        if (tempnode == null) {
+            return null;
+        }
         if (value < tempnode.key) {
             tempnode.left = deleteLeafNode(tempnode.left, value);
         } else if (value > tempnode.key) {
@@ -85,6 +88,9 @@ class BinarySearchTree {
     }
 
     private Node deleteNodeWithOneChild(Node tempnode, int value) {
+        if (tempnode == null) {
+            return null;
+        }
         if (value < tempnode.key) {
             tempnode.left = deleteNodeWithOneChild(tempnode.left, value);
         } else if (value > tempnode.key) {
@@ -97,5 +103,28 @@ class BinarySearchTree {
             }
         }
         return tempnode;
+    }
+
+    private Node deleteNodeWithTwoChilds(Node tempnode, int value) {
+        if (tempnode == null) {
+            return null;
+        }
+        if (value < tempnode.key) {
+            tempnode.left = deleteNodeWithTwoChilds(tempnode.left, value);
+        } else if (value > tempnode.key) {
+            tempnode.right = deleteNodeWithTwoChilds(tempnode.right, value);
+        } else if (value == tempnode.key) {
+            Node successor = findSuccessor(tempnode.right);
+            tempnode.key = successor.key;
+            tempnode.right = deleteNodeWithTwoChilds(tempnode.right, successor.key);
+        }
+        return tempnode;
+    }
+
+    public Node findSuccessor(Node node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
     }
 }
