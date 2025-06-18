@@ -250,7 +250,7 @@ class BinarySearchTree {
         if (root == null) {
             return;
         }
-        Queue<TreeNode> queue = new LinkedList();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
 
         while (!queue.isEmpty()) {
